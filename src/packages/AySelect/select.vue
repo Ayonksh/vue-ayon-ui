@@ -3,7 +3,7 @@
     <ay-popover
       trigger="click"
       :placement="placement"
-      :customStyle="popoverStyle"
+      :width="popoverWidth"
       ref="popover"
     >
       <div
@@ -124,8 +124,8 @@ export default {
       type: String,
       default: "bottom",
     },
-    popoverStyle: {
-      type: Object,
+    popoverWidth: {
+      type: String,
     },
     size: {
       type: String,
@@ -184,8 +184,8 @@ export default {
     };
   },
   mounted() {
-    if (!this.popoverStyle) {
-      this.popoverStyle.width = this.width || this.$refs.input.width; // 以 input 宽度为 popover 宽度
+    if (!this.popoverWidth) {
+      this.popoverWidth = this.width || this.$refs.input.width; // 以 input 宽度为 popover 宽度
     }
     this.initPopover = true; // popover 的 dom 结构挂载完毕，值设为 true
   },

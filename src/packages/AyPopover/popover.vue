@@ -1,10 +1,10 @@
 <template>
   <div class="ay-popover">
-    <transition name="ay-zoom-in-top">
+    <transition name="ay-fade-in">
       <div
         class="ay-popover__body"
         :class="`ay-popover__body--${placement}`"
-        :style="customStyle"
+        :style="[popoverStyle, customStyle]"
         ref="popover"
         v-if="initPopover"
         v-show="showPopover"
@@ -40,6 +40,10 @@ export default {
       default: "bottom",
       validator: (value) =>
         /^(top|bottom|left|right)(-start|-end)?$/g.test(value) != false,
+    },
+    width: {
+      type: String,
+      default: "150px",
     },
     // 打开延迟
     openDelay: {
@@ -78,6 +82,14 @@ export default {
       }
     }
   },
+  computed: {
+    popoverStyle() {
+      const { width } = this;
+      return {
+        width: width,
+      };
+    },
+  },
   watch: {
     initPopover() {
       this.$nextTick(this.createPopover);
@@ -106,7 +118,7 @@ export default {
         top: triggerTop,
       } = trigger.getBoundingClientRect();
       const { width: contentWidth, height: contentHeight } =
-        this.getOuterSize(popover);
+        popover.getBoundingClientRect();
 
       const fixed = 10;
       let style = {};
@@ -246,18 +258,6 @@ export default {
       }
       popover.style.left = `${style.left}px`;
       popover.style.top = `${style.top}px`;
-    },
-    getOuterSize(element) {
-      let _display = element.style.display;
-      let _visibility = element.style.visibility;
-      element.style.display = "block";
-      element.style.visibility = "hidden";
-
-      let result = element.getBoundingClientRect();
-
-      element.style.display = _display;
-      element.style.visibility = _visibility;
-      return result;
     },
     doToggle() {
       if (this.initPopover == false) {
@@ -471,17 +471,13 @@ export default {
     background-color: $white;
   }
 }
-.ay-zoom-in-top-enter-active,
-.ay-zoom-in-top-leave-active {
-  opacity: 1;
-  transform: scaleY(1);
-  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
-    opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-  transform-origin: center top;
+.ay-fade-in-enter-active,
+.ay-fade-in-leave-active {
+  transition: opacity 0.3s linear;
 }
-.ay-zoom-in-top-enter,
-.ay-zoom-in-top-leave-to {
+.ay-fade-in-enter,
+.ay-fade-in-leave-to,
+.ay-fade-in-leave-active {
   opacity: 0;
-  transform: scaleY(0);
 }
 </style>
