@@ -347,11 +347,11 @@ export default {
 .ay-popover__body {
   position: absolute;
   padding: 6px;
-  border: 1px solid $grey;
+  border: 1px solid #ebeef5;
   border-radius: 10px;
-  background-color: $white;
-  @include box-shadow;
-  z-index: $popover-index;
+  background-color: #fff;
+  box-shadow: 0 2px 12px 4px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
   .ay-popover__arrow {
     width: 0;
     height: 0;
@@ -360,62 +360,62 @@ export default {
     &--top {
       bottom: -6px;
       border-bottom: 0;
-      border-top-color: $white;
+      border-top-color: #fff;
     }
     &--top-start {
       bottom: -6px;
       border-bottom: 0;
-      border-top-color: $white;
+      border-top-color: #fff;
     }
     &--top-end {
       bottom: -6px;
       border-bottom: 0;
-      border-top-color: $white;
+      border-top-color: #fff;
     }
     &--right {
       left: -6px;
       border-left: 0;
-      border-right-color: $white;
+      border-right-color: #fff;
     }
     &--right-start {
       left: -6px;
       border-left: 0;
-      border-right-color: $white;
+      border-right-color: #fff;
     }
     &--right-end {
       left: -6px;
       border-left: 0;
-      border-right-color: $white;
+      border-right-color: #fff;
     }
     &--bottom {
       top: -6px;
       border-top: 0;
-      border-bottom-color: $white;
+      border-bottom-color: #fff;
     }
     &--bottom-start {
       top: -6px;
       border-top: 0;
-      border-bottom-color: $white;
+      border-bottom-color: #fff;
     }
     &--bottom-end {
       top: -6px;
       border-top: 0;
-      border-bottom-color: $white;
+      border-bottom-color: #fff;
     }
     &--left {
       right: -6px;
       border-right: 0;
-      border-left-color: $white;
+      border-left-color: #fff;
     }
     &--left-start {
       right: -6px;
       border-right: 0;
-      border-left-color: $white;
+      border-left-color: #fff;
     }
     &--left-end {
       right: -6px;
       border-right: 0;
-      border-left-color: $white;
+      border-left-color: #fff;
     }
   }
   &--top {
@@ -455,7 +455,7 @@ export default {
     margin-right: 6px;
   }
   ::-webkit-scrollbar {
-    background-color: $white;
+    background-color: #fff;
     width: 4px;
     height: 4px;
     background-clip: padding-box;
@@ -463,12 +463,12 @@ export default {
 
   /* 滚动条中间滑动部分 */
   ::-webkit-scrollbar-thumb {
-    background-color: $theme-color;
+    background-color: #d33a31;
     border-radius: 5px;
   }
 
   ::-webkit-scrollbar-button {
-    background-color: $white;
+    background-color: #fff;
   }
 }
 .ay-fade-in-enter-active,

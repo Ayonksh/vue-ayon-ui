@@ -194,7 +194,7 @@ export default {
       const { inputHeight, inputPadding } = this;
       let borderColor;
       if (this.isFocus) {
-        borderColor = "$blue-light";
+        borderColor = "#409eff";
       }
       return {
         width: this.width,
@@ -318,13 +318,15 @@ export default {
       border-radius: 5px;
       transition: 0.5s;
       box-sizing: border-box;
-      @include text-ellipsis;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       &:hover {
-        border-color: $grey-dark;
+        border-color: #909399;
       }
       &:focus {
         outline: none;
-        border-color: $blue-light;
+        border-color: #409eff;
       }
     }
     .ay-select__suffix {
@@ -376,7 +378,9 @@ export default {
           transform: translateY(-50%);
           right: 4px;
           height: 100%;
-          @include circle(12px);
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
           background-color: #c0c4cc;
           pointer-events: auto;
           .icon {
@@ -405,11 +409,11 @@ export default {
     transition: 0.5s;
     cursor: pointer;
     &.checked {
-      color: $blue-light;
+      color: #409eff;
       font-weight: bold;
     }
     &:hover {
-      background-color: $grey;
+      background-color: #ebeef5;
     }
   }
 }

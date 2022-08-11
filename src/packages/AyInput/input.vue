@@ -270,13 +270,15 @@ export default {
       border: 1px solid #dcdfe6;
       border-radius: 5px;
       box-sizing: border-box;
-      @include text-ellipsis;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       &:hover {
-        border-color: $grey-dark;
+        border-color: #909399;
       }
       &:focus {
         outline: none;
-        border-color: $blue-light;
+        border-color: #409eff;
       }
     }
     .ay-input__fix {
@@ -301,7 +303,7 @@ export default {
         opacity: 0.5;
       }
       .ay-input__count {
-        color: $grey-dark;
+        color: #909399;
         font-size: 12px;
       }
     }
