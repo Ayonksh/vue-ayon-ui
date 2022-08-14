@@ -37,24 +37,24 @@
           <slot name="suffix"></slot>
         </template>
         <ay-svg-icon
-          v-if="showClear"
           class="icon"
+          v-if="showClear"
           icon="close"
           @click.native="clear"
         />
         <ay-svg-icon
-          v-if="showPwdVisible && !passwordVisible"
           class="icon"
+          v-if="showPwdVisible && !passwordVisible"
           icon="showpwd"
           @click.native="handlePasswordVisible"
         />
         <ay-svg-icon
-          v-else-if="passwordVisible"
           class="icon"
+          v-else-if="passwordVisible"
           icon="hidepwd"
           @click.native="handlePasswordVisible"
         />
-        <span v-if="isWordLimitVisible" class="ay-input__count">
+        <span class="ay-input__count" v-if="isWordLimitVisible">
           {{ textLength }}/{{ upperLimit }}
         </span>
       </div>
@@ -125,7 +125,6 @@ export default {
       validator: (type) => ["sm", "md", "lg"].indexOf(type) != -1,
       default: "md",
     },
-    customStyle: Object,
     placeholder: String,
     disabled: Boolean,
     readonly: Boolean,
@@ -141,6 +140,7 @@ export default {
       type: Boolean,
       default: false,
     },
+    customStyle: Object,
   },
   data() {
     return {
@@ -259,8 +259,8 @@ export default {
 
 <style lang="scss" scoped>
 .ay-input {
-  display: flex;
   position: relative;
+  display: flex;
   .ay-input__body {
     min-width: 120px;
     width: 100%;

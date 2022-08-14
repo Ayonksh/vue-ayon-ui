@@ -345,11 +345,11 @@ export default {
   }
 }
 .ay-popover__body {
-  position: absolute;
   padding: 6px;
   border: 1px solid #ebeef5;
   border-radius: 10px;
   background-color: #fff;
+  position: absolute;
   box-shadow: 0 2px 12px 4px rgba(0, 0, 0, 0.15);
   z-index: 1000;
   .ay-popover__arrow {

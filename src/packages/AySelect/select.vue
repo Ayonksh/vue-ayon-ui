@@ -31,13 +31,13 @@
         />
         <div class="ay-select__suffix" :style="suffixStyle">
           <ay-svg-icon
-            v-show="!showClear"
             :class="['icon', showPopover ? 'reverse' : '']"
+            v-show="!showClear"
             icon="arrow-down"
           />
           <ay-svg-icon
-            v-if="showClear"
             class="icon"
+            v-if="showClear"
             icon="close"
             @click.native="clear"
           />
@@ -330,11 +330,11 @@ export default {
       }
     }
     .ay-select__suffix {
+      padding: 0 6px;
       position: absolute;
       right: 0;
       top: 50%;
       transform: translateY(-50%);
-      padding: 0 6px;
       z-index: 20;
       display: flex;
       justify-content: center;
@@ -350,38 +350,37 @@ export default {
       }
     }
     .ay-select__tags {
+      width: 100%;
+      padding: 2px;
       position: absolute;
       left: 0;
       top: 50%;
       transform: translateY(-50%);
-      width: 100%;
-      padding: 2px;
       display: flex;
       justify-content: flex-start;
       align-items: center;
       flex-wrap: wrap;
       pointer-events: none;
       .ay-select__tags-item {
-        position: relative;
         font-size: 12px;
         margin: 2px;
         color: #909399;
         background-color: #f4f4f5;
         border: 1px solid #e9e9eb;
         border-radius: 3px;
+        position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
         .icon-wrapper {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          right: 4px;
-          height: 100%;
           width: 12px;
           height: 12px;
           border-radius: 50%;
           background-color: #c0c4cc;
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          right: 4px;
           pointer-events: auto;
           .icon {
             font-size: 12px;

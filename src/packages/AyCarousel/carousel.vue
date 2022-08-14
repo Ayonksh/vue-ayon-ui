@@ -26,9 +26,9 @@
       </transition>
     </div>
     <ul
-      v-if="indicatorPosition !== 'none'"
       class="ay-carousel__indicator"
       :style="indicatorStyle"
+      v-if="indicatorPosition !== 'none'"
     >
       <li
         class="ay-carousel__indicator-item"
@@ -210,13 +210,13 @@ export default {
     position: relative;
     overflow: hidden;
     .ay-carousel__arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
       width: 36px;
       height: 36px;
       border-radius: 50%;
       background-color: #3399ff;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
       display: flex;
       justify-content: center;
       align-items: center;

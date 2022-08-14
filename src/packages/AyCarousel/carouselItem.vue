@@ -1,14 +1,14 @@
 <template>
   <div
-    v-show="ready"
     class="ay-carousel__item"
     :style="itemStyle"
+    v-show="ready"
     @click="handleItemClick"
   >
     <div
+      class="ay-carousel__item-mask"
       v-if="$parent.type === 'card'"
       v-show="!active"
-      class="ay-carousel__item-mask"
     ></div>
     <slot></slot>
   </div>
@@ -118,10 +118,10 @@ export default {
 
 <style lang="scss" scoped>
 .ay-carousel__item {
+  height: 100%;
   position: absolute;
   top: 0;
   left: 0;
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -129,12 +129,12 @@ export default {
   transition: transform 0.5s ease-in-out;
   z-index: 0;
   &-mask {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
     background-color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
     opacity: 0.24;
     transition: transform 0.4s ease-in-out;
   }
