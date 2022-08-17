@@ -24,27 +24,32 @@
         @mousedown="onMousedown"
       ></div>
     </div>
-    <div
-      class="ay-progress-circle"
-      :style="{ width: groundWidth, height: groundWidth }"
-      v-else
-    >
-      <svg viewBox="0 0 100 100">
+    <div class="ay-progress-circle" :style="circleStyle" v-else>
+      <svg :viewBox="viewBox">
         <path
           :d="trackPath"
           stroke="#e5e9f2"
-          :stroke-width="relativeStrokeWidth"
+          :stroke-width="strokeWidth_"
           fill="none"
           :style="trailPathStyle"
         ></path>
         <path
+          id="svg-path"
           :d="trackPath"
           :stroke="stroke"
-          :stroke-width="percentage ? relativeStrokeWidth : 0"
+          :stroke-width="percentage ? strokeWidth_ : 0"
           :stroke-linecap="strokeLinecap"
           fill="none"
           :style="circlePathStyle"
         ></path>
+        <circle
+          id="svg-btn"
+          cx="0"
+          cy="0"
+          :r="strokeWidth_"
+          :fill="stroke"
+          v-if="!disable"
+        ></circle>
       </svg>
     </div>
     <div
@@ -59,6 +64,10 @@
 </template>
 
 <script>
+import { gsap } from "gsap";
+import { Draggable } from "gsap/Draggable";
+gsap.registerPlugin(Draggable);
+
 import { on, off } from "@/utils/dom";
 
 export default {
@@ -68,7 +77,7 @@ export default {
     event: "percentageChange",
   },
   props: {
-    // 当前进度，值为 0 - 1
+    // 当前进度，值为 0 - 100
     percentage: Number,
     // 种类
     type: {
@@ -83,12 +92,12 @@ export default {
       type: [String, Array, Function],
       default: "",
     },
-    // 是否显示进度文字内容
+    // 是否显示进度
     showProgress: {
       type: Boolean,
       default: true,
     },
-    // 指定进度文字内容
+    // 指定进度内容
     format: Function,
 
     // 当 type 为 line 的时候
@@ -115,15 +124,15 @@ export default {
     },
 
     // 当 type 为 circle 或者 dashboard 的时候
-    // 进度环的画布宽度
-    groundWidth: {
+    // 进度环的半径
+    radius: {
       type: String,
-      default: "126px",
+      default: "50px",
     },
     // 进度环的线条宽度
     strokeWidth: {
       type: String,
-      default: "6px",
+      default: "4px",
     },
     // 进度环的线条路径两端的形状
     strokeLinecap: {
@@ -139,20 +148,31 @@ export default {
       movingStartX: 0,
       movingStartY: 0,
       moving: false,
-      groundWidth_: Number(this.groundWidth.split("px")[0]),
+      svgPercentage: this.percentage,
+      radius_: Number(this.radius.split("px")[0]),
       strokeWidth_: Number(this.strokeWidth.split("px")[0]),
     };
+  },
+  mounted() {
+    this.$nextTick(() => {
+      if (this.type === "line" && this.barMode === "vertical") {
+        this.reflow();
+        on(document, "mouseup", this.stopMove);
+      } else if (this.type !== "line") {
+        this.setSvgBtn();
+      }
+    });
   },
   computed: {
     barInnerStyle() {
       if (this.barMode === "horizontal") {
         return {
-          width: `${this.percentage * this.barWidth_}px`,
+          width: `${(this.percentage / 100) * this.barWidth_}px`,
           backgroundColor: this.stroke,
         };
       } else {
         return {
-          height: `${this.percentage * this.barHeight_}px`,
+          height: `${(this.percentage / 100) * this.barHeight_}px`,
           backgroundColor: this.stroke,
         };
       }
@@ -183,10 +203,12 @@ export default {
     btnPos() {
       const { btnWidth } = this;
       if (this.barMode === "horizontal") {
-        const currentPos = this.percentage * this.barWidth_ - btnWidth / 2;
+        const currentPos =
+          (this.percentage / 100) * this.barWidth_ - btnWidth / 2;
         return `${currentPos}px`;
       } else {
-        const currentPos = this.percentage * this.barHeight_ - btnWidth / 2;
+        const currentPos =
+          (this.percentage / 100) * this.barHeight_ - btnWidth / 2;
         return `${currentPos}px`;
       }
     },
@@ -197,56 +219,61 @@ export default {
         return this.barWidth_ * this.coefficient;
       }
     },
-    relativeStrokeWidth() {
-      return ((this.strokeWidth_ / this.groundWidth_) * 100).toFixed(1);
+    groundWidth() {
+      return this.radius_ * 2 + this.strokeWidth_ / 2 + 10; // 加 10 是为了增大画布宽高
     },
-    radius() {
-      if (this.type === "circle" || this.type === "dashboard") {
-        return parseInt(50 - parseFloat(this.relativeStrokeWidth) / 2, 10);
-      } else {
-        return 0;
-      }
+    circleStyle() {
+      return {
+        width: this.groundWidth + "px",
+        height: this.groundWidth + "px",
+      };
+    },
+    viewBox() {
+      return `0 0 ${this.groundWidth} ${this.groundWidth}`;
     },
     trackPath() {
-      const radius = this.radius;
+      const radius = this.radius_;
+      const centerPos = this.groundWidth / 2;
       const isDashboard = this.type === "dashboard";
+      const startX = centerPos;
+      const startY = isDashboard ? centerPos + radius : centerPos - radius;
       return `
-          M 50 50
-          m 0 ${isDashboard ? "" : "-"}${radius}
+          M ${startX} ${startY}
           a ${radius} ${radius} 0 1 1 0 ${isDashboard ? "-" : ""}${radius * 2}
           a ${radius} ${radius} 0 1 1 0 ${isDashboard ? "" : "-"}${radius * 2}
           `;
     },
     perimeter() {
-      return 2 * Math.PI * this.radius;
+      return 2 * Math.PI * this.radius_;
     },
     rate() {
       return this.type === "dashboard" ? 0.75 : 1;
     },
     strokeDashoffset() {
       const offset = (-1 * this.perimeter * (1 - this.rate)) / 2;
-      return `${offset}px`;
+      return offset;
     },
     trailPathStyle() {
       return {
         strokeDasharray: `${this.perimeter * this.rate}px, ${this.perimeter}px`,
-        strokeDashoffset: this.strokeDashoffset,
+        strokeDashoffset: `${this.strokeDashoffset}px`,
       };
     },
     circlePathStyle() {
       return {
-        strokeDasharray: `${this.perimeter * this.rate * this.percentage}px,
-          ${this.perimeter}px`,
-        strokeDashoffset: this.strokeDashoffset,
-        transition: "stroke-dasharray 0.6s ease 0s, stroke 0.6s ease",
+        strokeDasharray: `${
+          this.perimeter * this.rate * (this.percentage / 100)
+        }px, ${this.perimeter}px`,
+        strokeDashoffset: `${this.strokeDashoffset}px`,
+        // transition: "stroke-dasharray 0.6s ease 0s, stroke 0.6s ease",
       };
     },
     status() {
-      if (this.percentage >= 0.75) {
+      if (this.percentage >= 75) {
         return "success";
-      } else if (this.percentage >= 0.5 && this.percentage < 0.75) {
+      } else if (this.percentage >= 50 && this.percentage < 75) {
         return "inspiring";
-      } else if (this.percentage >= 0.25 && this.percentage < 0.5) {
+      } else if (this.percentage >= 25 && this.percentage < 50) {
         return "warning";
       } else {
         return "danger";
@@ -284,7 +311,7 @@ export default {
           style.marginBottom = "5px";
         }
       } else {
-        style.width = this.groundWidth;
+        style.width = this.groundWidth + "px";
         style.position = "absolute";
         style.left = 0;
         style.top = "50%";
@@ -300,34 +327,148 @@ export default {
           return 12 + this.barWidth_ * 0.1;
         }
       } else {
-        return this.groundWidth_ * 0.1 + 2;
+        return this.groundWidth * 0.1 + 2;
       }
     },
     content() {
       if (typeof this.format === "function") {
         return this.format(this.percentage) || "";
       } else {
-        return `${(this.percentage * 100).toFixed(1)}%`;
+        return `${this.percentage.toFixed(1)}%`;
       }
     },
   },
-  mounted() {
-    on(document, "mouseup", this.stopMove);
-    this.$nextTick(() => {
-      if (this.type === "line" && this.barMode === "vertical") {
-        let node = this.$refs.text;
-        let refNode = this.$refs.bar;
-        this.$el.insertBefore(node, refNode);
-        this.$el.style.display = "flex";
-        this.$el.style.justifyContent = "center";
-        this.$el.style.alignItems = "center";
-        this.$el.style.flexDirection = "column";
-      }
-    });
+  watch: {
+    svgPercentage(newVal) {
+      this.$emit("percentageChange", newVal);
+      this.$emit("moving");
+    },
   },
   methods: {
+    reflow() {
+      let node = this.$refs.text;
+      let refNode = this.$refs.bar;
+      this.$el.insertBefore(node, refNode);
+
+      this.$el.style.display = "flex";
+      this.$el.style.justifyContent = "center";
+      this.$el.style.alignItems = "center";
+      this.$el.style.flexDirection = "column";
+    },
+    setSvgBtn() {
+      if (this.disable) return;
+
+      let data = this.$data; // 使用浅拷贝来修改 this.$data.svgPercentage
+      let rate = this.rate;
+      let strokeDashoffset = this.strokeDashoffset;
+      let btn = document.querySelector("#svg-btn");
+      let path = document.querySelector("#svg-path");
+      let pathLength = path.getTotalLength() || 0;
+      let startPosition =
+        pathLength * rate * (data.svgPercentage / 100) - strokeDashoffset;
+      let startPoint = path.getPointAtLength(startPosition);
+
+      gsap.set(btn, {
+        transformOrigin: "center",
+        x: startPoint.x,
+        y: startPoint.y,
+      });
+      Draggable.create(btn, {
+        liveSnap: {
+          points: pointModifier,
+        },
+      });
+      function pointModifier(point) {
+        let p = closestPoint(path, pathLength, point);
+        return p.point;
+      }
+      function closestPoint(pathNode, pathLength, point) {
+        // point 是鼠标移动时的坐标点
+        // console.log(point);
+        // 圆弧上距离鼠标最近的点为 min，这个点距离 path 的起始点：弧长为 minLength，直线距离为 minDistance
+        let precision = 8,
+          min,
+          minLength,
+          minDistance = Infinity;
+
+        // linear scan for coarse approximation
+        for (
+          let scan, scanLength = 0, scanDistance;
+          scanLength <= pathLength;
+          scanLength += precision
+        ) {
+          if (
+            (scanDistance = distance2(
+              (scan = pathNode.getPointAtLength(scanLength))
+            )) < minDistance
+          ) {
+            (min = scan),
+              (minLength = scanLength),
+              (minDistance = scanDistance);
+          }
+        }
+        // binary search for precise estimate
+        precision /= 2;
+        while (precision > 0.5) {
+          let before,
+            after,
+            beforeLength,
+            afterLength,
+            beforeDistance,
+            afterDistance;
+          if (
+            (beforeLength = minLength - precision) >= 0 &&
+            (beforeDistance = distance2(
+              (before = pathNode.getPointAtLength(beforeLength))
+            )) < minDistance
+          ) {
+            (min = before),
+              (minLength = beforeLength),
+              (minDistance = beforeDistance);
+          } else if (
+            (afterLength = minLength + precision) <= pathLength &&
+            (afterDistance = distance2(
+              (after = pathNode.getPointAtLength(afterLength))
+            )) < minDistance
+          ) {
+            (min = after),
+              (minLength = afterLength),
+              (minDistance = afterDistance);
+          } else {
+            precision /= 2;
+          }
+        }
+
+        updatePercentage(minLength);
+
+        return {
+          point: min,
+          length: minLength,
+          distance: Math.sqrt(minDistance),
+        };
+
+        function distance2(p) {
+          let dx = p.x - point.x,
+            dy = p.y - point.y;
+          return dx * dx + dy * dy;
+        }
+      }
+
+      function updatePercentage(distance) {
+        if (distance < -strokeDashoffset) {
+          data.svgPercentage = 0;
+        } else if (distance > pathLength + strokeDashoffset) {
+          data.svgPercentage = 100;
+        } else {
+          data.svgPercentage =
+            ((distance + strokeDashoffset) /
+              (pathLength + 2 * strokeDashoffset)) *
+            100;
+        }
+      }
+    },
     formatPercentage(percentage) {
-      return Math.max(Math.min(percentage, 1), 0);
+      return Math.max(Math.min(percentage, 100), 0);
     },
     handleClick(e) {
       if (this.disable) return;
@@ -337,10 +478,10 @@ export default {
       }
       let percent;
       if (this.barMode === "horizontal") {
-        percent = this.formatPercentage(e.offsetX / this.barWidth_);
+        percent = this.formatPercentage((e.offsetX / this.barWidth_) * 100);
       } else {
         percent = this.formatPercentage(
-          (this.barHeight_ - e.offsetY) / this.barHeight_
+          ((this.barHeight_ - e.offsetY) / this.barHeight_) * 100
         );
       }
       this.$emit("percentageChange", percent);
@@ -363,12 +504,13 @@ export default {
         let percent;
         if (this.barMode === "horizontal") {
           percent = this.formatPercentage(
-            (e.clientX - this.movingStartX) / this.barWidth_
+            ((e.clientX - this.movingStartX) / this.barWidth_) * 100
           );
         } else {
           percent = this.formatPercentage(
-            (this.barHeight_ - (e.clientY - this.movingStartY)) /
-              this.barHeight_
+            ((this.barHeight_ - (e.clientY - this.movingStartY)) /
+              this.barHeight_) *
+              100
           );
         }
         this.$emit("percentageChange", percent);
@@ -403,7 +545,7 @@ export default {
     },
     getColorArray() {
       const color = this.color;
-      const span = 1 / color.length;
+      const span = 100 / color.length;
       return color.map((seriesColor, index) => {
         if (typeof seriesColor === "string") {
           return {
@@ -447,7 +589,7 @@ export default {
     &__btn {
       border-radius: 50%;
       position: absolute;
-      cursor: pointer;
+      cursor: grab;
     }
   }
   .ay-progress-text {
