@@ -40,19 +40,19 @@
           class="icon"
           v-if="showClear"
           icon="close"
-          @click.native="clear"
+          @click="clear"
         />
         <ay-svg-icon
           class="icon"
           v-if="showPwdVisible && !passwordVisible"
           icon="showpwd"
-          @click.native="handlePasswordVisible"
+          @click="handlePasswordVisible"
         />
         <ay-svg-icon
           class="icon"
           v-else-if="passwordVisible"
           icon="hidepwd"
-          @click.native="handlePasswordVisible"
+          @click="handlePasswordVisible"
         />
         <span class="ay-input__count" v-if="isWordLimitVisible">
           {{ textLength }}/{{ upperLimit }}

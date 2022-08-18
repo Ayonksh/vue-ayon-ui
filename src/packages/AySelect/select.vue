@@ -39,7 +39,7 @@
             class="icon"
             v-if="showClear"
             icon="close"
-            @click.native="clear"
+            @click="clear"
           />
         </div>
         <div class="ay-select__tags" ref="checkList">
@@ -56,7 +56,7 @@
               <ay-svg-icon
                 class="icon"
                 icon="close2"
-                @click.native="clearTargetIdx(checkedIdx)"
+                @click="clearTargetIdx(checkedIdx)"
               />
             </div>
           </div>
