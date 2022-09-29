@@ -74,7 +74,6 @@ export default {
   0% {
     transform: rotate(0);
   }
-
   100% {
     transform: rotate(1turn);
   }

@@ -128,4 +128,17 @@ export default {
     font-weight: 500;
   }
 }
+.ay-notification-fade-enter {
+  &.right {
+    right: 0;
+    transform: translateX(100%);
+  }
+  &.left {
+    left: 0;
+    transform: translateX(-100%);
+  }
+}
+.ay-notification-fade-leave-active {
+  opacity: 0;
+}
 </style>

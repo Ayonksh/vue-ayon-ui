@@ -455,20 +455,21 @@ export default {
     margin-right: 6px;
   }
   ::-webkit-scrollbar {
-    background-color: #fff;
-    width: 4px;
-    height: 4px;
+    background-color: $white;
+    width: 6px;
+    height: 6px;
     background-clip: padding-box;
   }
-
   /* 滚动条中间滑动部分 */
   ::-webkit-scrollbar-thumb {
-    background-color: #d33a31;
+    background-color: $theme-color;
     border-radius: 5px;
   }
-
   ::-webkit-scrollbar-button {
-    background-color: #fff;
+    display: none;
+  }
+  ::-webkit-scrollbar-corner {
+    display: none;
   }
 }
 .ay-fade-in-enter-active,

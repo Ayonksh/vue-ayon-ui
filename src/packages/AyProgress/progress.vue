@@ -352,14 +352,12 @@ export default {
     setSvgBtn() {
       if (this.disable) return;
 
-      let data = this.$data; // 使用浅拷贝来修改 this.$data.svgPercentage
-      let rate = this.rate;
-      let strokeDashoffset = this.strokeDashoffset;
+      let that = this;
       let btn = document.querySelector("#svg-btn");
       let path = document.querySelector("#svg-path");
       let pathLength = path.getTotalLength() || 0;
       let startPosition =
-        pathLength * rate * data.svgPercentage - strokeDashoffset;
+        pathLength * that.rate * that.svgPercentage - that.strokeDashoffset;
       let startPoint = path.getPointAtLength(startPosition);
 
       gsap.set(btn, {
@@ -449,13 +447,13 @@ export default {
       }
 
       function updatePercentage(distance) {
-        if (distance < -strokeDashoffset) {
-          data.svgPercentage = 0;
-        } else if (distance > pathLength + strokeDashoffset) {
-          data.svgPercentage = 1;
+        if (distance < -that.strokeDashoffset) {
+          that.svgPercentage = 0;
+        } else if (distance > pathLength + that.strokeDashoffset) {
+          that.svgPercentage = 1;
         } else {
-          data.svgPercentage =
-            (distance + strokeDashoffset) / (pathLength + 2 * strokeDashoffset);
+          that.svgPercentage =
+            (distance + that.strokeDashoffset) / (pathLength + 2 * that.strokeDashoffset);
         }
       }
     },
