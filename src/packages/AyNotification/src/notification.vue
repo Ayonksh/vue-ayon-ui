@@ -9,7 +9,7 @@
     >
       <div class="ay-notification__header">
         <h1 class="ay-notification__title">{{ title }}</h1>
-        <ay-svg-icon class="close" icon="close" @click.stop="handleClose" />
+        <ay-icon class="close" icon="close" @click.stop="handleClose" />
       </div>
       <div class="ay-notification__content" v-if="message">
         {{ message }}

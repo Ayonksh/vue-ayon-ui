@@ -4,11 +4,11 @@
       <slot></slot>
       <div
         class="ay-loading__mask"
-        :style="{ 'background-color': background }"
+        :style="{ 'background-color': background || '' }"
         v-if="loading"
       >
         <div class="ay-loading__loader"></div>
-        <span class="ay-loading__title" v-if="title">{{ title }}</span>
+        <span class="ay-loading__text" v-if="text">{{ text }}</span>
       </div>
     </div>
   </transition>
@@ -25,7 +25,7 @@ export default {
     // 遮罩背景色
     background: String,
     // 显示在加载图标下方的加载文案
-    title: String,
+    text: String,
   },
   methods: {
     onClickLoading() {
@@ -62,7 +62,7 @@ export default {
       border-radius: 50%;
       animation: rotate 1.2s infinite linear;
     }
-    .ay-loading__title {
+    .ay-loading__text {
       margin: 4px 0;
       color: #409eff;
       font-size: 14px;

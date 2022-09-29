@@ -1,39 +1,39 @@
 <template>
   <div
-    class="ay-carousel"
+    class="ay-swiper"
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave"
   >
-    <div class="ay-carousel__body" :style="{ height: height }">
+    <div class="ay-swiper__body" :style="{ height: height }">
       <slot></slot>
       <transition v-if="arrowDisplay" name="ay-arrow-left">
         <div
-          class="ay-carousel__arrow ay-carousel__arrow--left"
+          class="ay-swiper__arrow ay-swiper__arrow--left"
           v-show="arrow === 'always' || hover"
           @click.stop="prev"
         >
-          <ay-svg-icon class="icon" icon="arrow-left-white" />
+          <ay-icon class="icon" icon="arrow-left-white" />
         </div>
       </transition>
       <transition v-if="arrowDisplay" name="ay-arrow-right">
         <div
-          class="ay-carousel__arrow ay-carousel__arrow--right"
+          class="ay-swiper__arrow ay-swiper__arrow--right"
           v-show="arrow === 'always' || hover"
           @click.stop="next"
         >
-          <ay-svg-icon class="icon" icon="arrow-right-white" />
+          <ay-icon class="icon" icon="arrow-right-white" />
         </div>
       </transition>
     </div>
     <ul
-      class="ay-carousel__indicator"
+      class="ay-swiper__indicator"
       :style="indicatorStyle"
       v-if="indicatorPosition !== 'none'"
     >
       <li
-        class="ay-carousel__indicator-item"
+        class="ay-swiper__indicator-item"
         :class="
-          activeIndex === index ? 'ay-carousel__indicator-item--active' : ''
+          activeIndex === index ? 'ay-swiper__indicator-item--active' : ''
         "
         v-for="(item, index) in items"
         :key="index"
@@ -47,7 +47,7 @@
 <script>
 import { throttle } from "throttle-debounce";
 export default {
-  name: "AyCarousel",
+  name: "AySwiper",
   props: {
     initialIndex: {
       type: Number,
@@ -171,7 +171,7 @@ export default {
     },
     updateItems() {
       this.items = this.$children.filter(
-        (child) => child.$options.name === "AyCarouselItem"
+        (child) => child.$options.name === "AySwiperItem"
       );
     },
     setActiveIndex(index) {
@@ -204,12 +204,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ay-carousel {
+.ay-swiper {
   position: relative;
-  .ay-carousel__body {
+  .ay-swiper__body {
     position: relative;
     overflow: hidden;
-    .ay-carousel__arrow {
+    .ay-swiper__arrow {
       width: 36px;
       height: 36px;
       border-radius: 50%;
@@ -237,7 +237,7 @@ export default {
       }
     }
   }
-  .ay-carousel__indicator {
+  .ay-swiper__indicator {
     display: flex;
     list-style: none;
     z-index: 10;

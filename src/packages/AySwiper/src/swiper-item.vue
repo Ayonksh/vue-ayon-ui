@@ -1,12 +1,12 @@
 <template>
   <div
-    class="ay-carousel__item"
+    class="ay-swiper-item"
     :style="itemStyle"
     v-show="ready"
     @click="handleItemClick"
   >
     <div
-      class="ay-carousel__item-mask"
+      class="ay-swiper-item__mask"
       v-if="$parent.type === 'card'"
       v-show="!active"
     ></div>
@@ -17,7 +17,7 @@
 <script>
 const CARD_SCALE = 0.83;
 export default {
-  name: "AyCarouselItem",
+  name: "AySwiperItem",
   data() {
     return {
       ready: false,
@@ -117,7 +117,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ay-carousel__item {
+.ay-swiper-item {
   height: 100%;
   position: absolute;
   top: 0;
@@ -128,7 +128,7 @@ export default {
   overflow: hidden;
   transition: transform 0.5s ease-in-out;
   z-index: 0;
-  &-mask {
+  &__mask {
     width: 100%;
     height: 100%;
     background-color: #fff;

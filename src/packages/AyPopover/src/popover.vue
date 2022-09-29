@@ -5,9 +5,9 @@
         class="ay-popover__body"
         :class="`ay-popover__body--${placement}`"
         :style="[popoverStyle, customStyle]"
-        ref="popover"
         v-if="initPopover"
         v-show="showPopover"
+        ref="popover"
       >
         <slot name="content"></slot>
         <div

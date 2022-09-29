@@ -36,19 +36,19 @@
         <template v-if="!showClear || !showPwdVisible || !isWordLimitVisible">
           <slot name="suffix"></slot>
         </template>
-        <ay-svg-icon
+        <ay-icon
           class="icon"
           v-if="showClear"
           icon="close"
           @click="clear"
         />
-        <ay-svg-icon
+        <ay-icon
           class="icon"
           v-if="showPwdVisible && !passwordVisible"
           icon="showpwd"
           @click="handlePasswordVisible"
         />
-        <ay-svg-icon
+        <ay-icon
           class="icon"
           v-else-if="passwordVisible"
           icon="hidepwd"

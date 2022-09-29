@@ -30,12 +30,12 @@
           @blur="handleBlur"
         />
         <div class="ay-select__suffix" :style="suffixStyle">
-          <ay-svg-icon
+          <ay-icon
             :class="['icon', showPopover ? 'reverse' : '']"
             v-show="!showClear"
             icon="arrow-down"
           />
-          <ay-svg-icon
+          <ay-icon
             class="icon"
             v-if="showClear"
             icon="close"
@@ -53,7 +53,7 @@
               {{ list[checkedIdx] && list[checkedIdx][labelName] }}
             </span>
             <div class="icon-wrapper">
-              <ay-svg-icon
+              <ay-icon
                 class="icon"
                 icon="close2"
                 @click="clearTargetIdx(checkedIdx)"
@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import AyPopover from "../AyPopover/popover.vue";
+import AyPopover from "../../AyPopover/src/popover.vue";
 
 const SM_MIN_INPUT_HEIGHT = 32;
 const MD_MIN_INPUT_HEIGHT = 36;
