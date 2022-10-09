@@ -54,6 +54,8 @@ export default {
 
 <style lang="scss" scoped>
 .ay-menu {
+  height: 100%;
+  border-right: 1px #ebeef5 solid;
   overflow: auto;
 }
 </style>
