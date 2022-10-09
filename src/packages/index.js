@@ -1,6 +1,10 @@
 import AyIcon from "./AyIcon/index";
 import AyInput from "./AyInput/index";
 import AyLoading from "./AyLoading/index";
+import AyMenu from "./AyMenu/index";
+import AyMenuItem from "./AyMenuItem/index";
+import AyMenuItemGroup from "./AyMenuItemGroup/index";
+import AySubMenu from "./AySubMenu/index";
 import AyNotification from "./AyNotification/index";
 import AyPopover from "./AyPopover/index";
 import AyProgress from "./AyProgress/index";
@@ -12,6 +16,10 @@ const components = [
   AyIcon,
   AyInput,
   AyLoading,
+  AyMenu,
+  AyMenuItem,
+  AyMenuItemGroup,
+  AySubMenu,
   AyPopover,
   AyProgress,
   AySelect,
@@ -38,6 +46,10 @@ export {
   AyIcon,
   AyInput,
   AyLoading,
+  AyMenu,
+  AyMenuItem,
+  AyMenuItemGroup,
+  AySubMenu,
   AyNotification,
   AyPopover,
   AyProgress,
