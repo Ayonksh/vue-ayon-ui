@@ -11,6 +11,8 @@ import AyProgress from "./AyProgress/index";
 import AySelect from "./AySelect/index";
 import AySwiper from "./AySwiper/index";
 import AySwiperItem from "./AySwiperItem/index";
+import AyTab from "./AyTab/index";
+import AyTabPane from "./AyTabPane/index";
 
 const components = [
   AyIcon,
@@ -25,6 +27,8 @@ const components = [
   AySelect,
   AySwiper,
   AySwiperItem,
+  AyTab,
+  AyTabPane,
 ];
 
 const ayonui = {
@@ -56,4 +60,6 @@ export {
   AySelect,
   AySwiper,
   AySwiperItem,
+  AyTab,
+  AyTabPane,
 };
