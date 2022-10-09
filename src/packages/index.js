@@ -1,3 +1,4 @@
+import AyDialog from "./AyDialog/index";
 import AyIcon from "./AyIcon/index";
 import AyInput from "./AyInput/index";
 import AyLoading from "./AyLoading/index";
@@ -15,6 +16,7 @@ import AyTab from "./AyTab/index";
 import AyTabPane from "./AyTabPane/index";
 
 const components = [
+  AyDialog,
   AyIcon,
   AyInput,
   AyLoading,
@@ -47,6 +49,7 @@ const ayonui = {
 export default ayonui;
 
 export {
+  AyDialog,
   AyIcon,
   AyInput,
   AyLoading,
