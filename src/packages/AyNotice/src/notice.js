@@ -1,7 +1,7 @@
 import Vue from "vue";
-import Component from "./notification.vue";
+import Component from "./notice.vue";
 
-const NotificationConstructor = Vue.extend(Component);
+const NoticeConstructor = Vue.extend(Component);
 
 const MARGING = 16; // 间隔
 
@@ -9,15 +9,15 @@ let seed = 1;
 let instance;
 let instances = [];
 
-const Notification = (options) => {
-  const id = "ay_notification_" + seed++;
+const Notice = (options) => {
+  const id = "ay_notice_" + seed++;
   const position = options.position || "top-right";
 
   options.onClose = function () {
-    Notification.close(id);
+    Notice.close(id);
   };
 
-  instance = new NotificationConstructor({
+  instance = new NoticeConstructor({
     data: options,
   });
 
@@ -39,7 +39,7 @@ const Notification = (options) => {
   return instance;
 };
 
-Notification.close = (id) => {
+Notice.close = (id) => {
   let index = -1;
   const len = instances.length;
   const instance = instances.filter((instance, i) => {
@@ -67,10 +67,10 @@ Notification.close = (id) => {
   }
 };
 
-Notification.closeAll = () => {
+Notice.closeAll = () => {
   for (let i = instances.length - 1; i >= 0; i--) {
     instances[i].close();
   }
 };
 
-export default Notification;
+export default Notice;

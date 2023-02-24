@@ -1,17 +1,17 @@
 <template>
-  <transition name="ay-notification-fade">
+  <transition name="ay-notice-fade">
     <div
-      :class="['ay-notification', `ay-notification--${horizontalClass}`]"
+      :class="['ay-notice', `ay-notice--${horizontalClass}`]"
       :style="positiveStyle"
       v-if="visible"
       @mouseenter="clearTimer"
       @mouseleave="startTimer"
     >
-      <div class="ay-notification__header">
-        <h1 class="ay-notification__title">{{ title }}</h1>
+      <div class="ay-notice__header">
+        <h1 class="ay-notice__title">{{ title }}</h1>
         <ay-icon class="close" icon="close" @click.stop="handleClose" />
       </div>
-      <div class="ay-notification__content" v-if="message">
+      <div class="ay-notice__content" v-if="message">
         {{ message }}
       </div>
     </div>
@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: "AyNotification",
+  name: "AyNotice",
   data() {
     return {
       visible: false,
@@ -89,7 +89,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ay-notification {
+.ay-notice {
   width: 250px;
   padding: 14px 20px;
   border-radius: 10px;
@@ -105,11 +105,11 @@ export default {
   &--right {
     right: 16px;
   }
-  .ay-notification__header {
+  .ay-notice__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    .ay-notification__title {
+    .ay-notice__title {
       width: 80%;
       font-size: 18px;
       font-weight: bold;
@@ -122,13 +122,13 @@ export default {
       cursor: pointer;
     }
   }
-  .ay-notification__content {
+  .ay-notice__content {
     margin-top: 12px;
     font-size: 15px;
     font-weight: 500;
   }
 }
-.ay-notification-fade-enter {
+.ay-notice-fade-enter {
   &.right {
     right: 0;
     transform: translateX(100%);
@@ -138,7 +138,7 @@ export default {
     transform: translateX(-100%);
   }
 }
-.ay-notification-fade-leave-active {
+.ay-notice-fade-leave-active {
   opacity: 0;
 }
 </style>

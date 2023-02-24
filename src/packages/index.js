@@ -6,7 +6,7 @@ import AyMenu from "./AyMenu/index";
 import AyMenuItem from "./AyMenuItem/index";
 import AyMenuItemGroup from "./AyMenuItemGroup/index";
 import AySubMenu from "./AySubMenu/index";
-import AyNotification from "./AyNotification/index";
+import AyNotice from "./AyNotice/index";
 import AyPopover from "./AyPopover/index";
 import AyProgress from "./AyProgress/index";
 import AySelect from "./AySelect/index";
@@ -42,7 +42,7 @@ const ayonui = {
     Vue.use(AyIcon);
     Vue.use(AyLoading);
 
-    Vue.prototype.$notify = AyNotification;
+    Vue.prototype.$notify = AyNotice;
   },
 };
 
@@ -57,7 +57,7 @@ export {
   AyMenuItem,
   AyMenuItemGroup,
   AySubMenu,
-  AyNotification,
+  AyNotice,
   AyPopover,
   AyProgress,
   AySelect,
