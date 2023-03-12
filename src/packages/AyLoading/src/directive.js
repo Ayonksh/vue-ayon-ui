@@ -52,7 +52,7 @@ loadingDirective.install = (Vue) => {
       const mask = new Mask({
         el: document.createElement("div"),
         data: {
-          text: vm?.textExr || text,
+          text: vm?.text || text,
           background: vm?.background || background,
           fullscreen: !!binding.modifiers.fullscreen,
         },

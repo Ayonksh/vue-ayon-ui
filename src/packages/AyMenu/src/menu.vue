@@ -13,11 +13,6 @@ export default {
     };
   },
   props: {
-    mode: {
-      type: String,
-      default: "vertical",
-      validator: (value) => ["vertical", "horizontal"].indexOf(value) > -1,
-    },
     defaultActive: {
       type: String,
       default: "",

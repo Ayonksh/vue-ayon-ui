@@ -62,7 +62,7 @@ export default {
     }
   }
   &--disable {
-    cursor: wait;
+    cursor: not-allowed;
     opacity: 0.4;
   }
 }

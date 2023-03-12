@@ -35,12 +35,7 @@
             v-show="!showClear"
             icon="arrow-down"
           />
-          <ay-icon
-            class="icon"
-            v-if="showClear"
-            icon="close"
-            @click="clear"
-          />
+          <ay-icon class="icon" v-if="showClear" icon="close" @click="clear" />
         </div>
         <div class="ay-select__tags" ref="checkList">
           <div
@@ -134,7 +129,7 @@ export default {
     },
     width: {
       type: String,
-      default: "80px",
+      default: "200px",
     },
     placeholder: {
       type: String,
@@ -308,9 +303,9 @@ export default {
 
 <style lang="scss" scoped>
 .ay-select {
+  display: inline-block;
   .ay-select__body {
     min-width: 80px;
-    width: 100%;
     position: relative;
     .ay-select__input {
       width: 100%;

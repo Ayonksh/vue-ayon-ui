@@ -1,6 +1,6 @@
 <template>
   <transition name="ay-fade">
-    <div class="ay-loading" @click.stop="onClickLoading">
+    <div class="ay-loading" :style="loadingStyle" @click.stop="onClickLoading">
       <slot></slot>
       <div
         class="ay-loading__mask"
@@ -22,10 +22,26 @@ export default {
       type: Boolean,
       required: true,
     },
+    width: {
+      type: String,
+      default: "100%",
+    },
+    height: {
+      type: String,
+      default: "100%",
+    },
     // 遮罩背景色
     background: String,
     // 显示在加载图标下方的加载文案
     text: String,
+  },
+  computed: {
+    loadingStyle() {
+      return {
+        width: this.width,
+        height: this.height,
+      };
+    },
   },
   methods: {
     onClickLoading() {
@@ -53,7 +69,7 @@ export default {
     align-items: center;
     justify-content: center;
     transition: opacity 0.3s;
-    z-index: 2000;
+    z-index: 5000;
     .ay-loading__loader {
       width: 30px;
       height: 30px;

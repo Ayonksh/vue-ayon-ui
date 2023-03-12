@@ -2,6 +2,7 @@
   <div class="ay-progress">
     <div
       class="ay-progress-bar"
+      :class="disable ? 'ay-progress-bar--disable' : ''"
       :style="barStyle"
       v-if="type === 'line'"
       ref="bar"
@@ -68,7 +69,7 @@ import { gsap } from "gsap";
 import { Draggable } from "gsap/Draggable";
 gsap.registerPlugin(Draggable);
 
-import { on, off } from "@/utils/dom";
+import { on, off } from "@/assets/js/dom";
 
 export default {
   name: "AyProgress",
@@ -87,7 +88,7 @@ export default {
     },
     // 是否允许调整进度
     disable: Boolean,
-    // 进度环的线条宽度
+    // 线条宽度
     strokeWidth: {
       type: String,
       default: "4px",
@@ -344,7 +345,7 @@ export default {
       let refNode = this.$refs.bar;
       this.$el.insertBefore(node, refNode);
 
-      this.$el.style.display = "flex";
+      this.$el.style.display = "inline-flex";
       this.$el.style.justifyContent = "center";
       this.$el.style.alignItems = "center";
       this.$el.style.flexDirection = "column";
@@ -453,7 +454,8 @@ export default {
           that.svgPercentage = 1;
         } else {
           that.svgPercentage =
-            (distance + that.strokeDashoffset) / (pathLength + 2 * that.strokeDashoffset);
+            (distance + that.strokeDashoffset) /
+            (pathLength + 2 * that.strokeDashoffset);
         }
       }
     },
@@ -555,6 +557,7 @@ export default {
 
 <style lang="scss" scoped>
 .ay-progress {
+  display: inline-block;
   position: relative;
   .ay-progress-bar {
     background-color: #ebeef5;
@@ -563,6 +566,9 @@ export default {
     display: inline-block;
     vertical-align: middle;
     cursor: pointer;
+    &--disable {
+      cursor: not-allowed;
+    }
     &__inner {
       border-radius: 5px;
       position: absolute;

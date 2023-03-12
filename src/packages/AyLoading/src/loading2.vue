@@ -44,7 +44,7 @@ export default {
   align-items: center;
   justify-content: center;
   transition: opacity 0.3s;
-  z-index: $loading-index;
+  z-index: 5000;
   .ay-loading__loader {
     width: 30px;
     height: 30px;
@@ -68,6 +68,15 @@ export default {
       margin: 6px 0;
       font-size: 15px;
     }
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(1turn);
   }
 }
 

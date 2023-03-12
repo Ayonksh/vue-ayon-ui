@@ -339,6 +339,7 @@ export default {
 
 <style lang="scss" scoped>
 .ay-popover {
+  display: inline-block;
   position: relative;
   .ay-popover__trigger {
     cursor: pointer;
@@ -455,14 +456,14 @@ export default {
     margin-right: 6px;
   }
   ::-webkit-scrollbar {
-    background-color: $white;
+    background-color: #fff;
     width: 6px;
     height: 6px;
     background-clip: padding-box;
   }
   /* 滚动条中间滑动部分 */
   ::-webkit-scrollbar-thumb {
-    background-color: $theme-color;
+    background-color: #d33a31;
     border-radius: 5px;
   }
   ::-webkit-scrollbar-button {
